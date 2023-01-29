@@ -1,0 +1,146 @@
+/* LINK FORMATTING */
+
+a:not(:has(img)) {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid white;
+  transition: border-bottom-width 0.2s ease-in-out;
+}
+
+a:hover {
+  font-weight: 700;
+  border-bottom-width: 3px;
+}
+
+/* BODY */
+html {
+  background-image: url('../img/bg.webp');
+  background-repeat: repeat;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+body {
+  font-family: Consolas;
+  color: white;
+  margin-left: 12%;
+  margin-right: 12%;
+}
+
+.container {
+  background-color: inherit;
+  /*depends on footer height*/
+  margin-bottom: 35px;
+}
+
+/* HEADER */
+
+header {
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+header nav ul li {
+  margin: 0 10px;
+}
+
+/* SECTIONS GLOBALS */
+
+section {
+  padding: 20px;
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+/* SECTIONS LOCALS */
+/* SECTIONS Homepage */
+
+section#hp-projects ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+section#hp-projects ul li {
+  margin-bottom: 10px;
+}
+
+/* SECTIONS About */
+
+section#about-badges div img{
+  height: 30px;
+}
+
+.column {
+  display:inline-block;
+}
+
+/* SECTIONS project2 */
+
+section#codeBox {
+  border: 1px solid #ccc;
+  background-color: #121212;
+}
+
+/* FOOTER */
+
+footer {
+  margin-left: 12%;
+  margin-right: 12%;
+  width: 76%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+
+  background-color: rgba(18, 18, 18, 0.7);
+
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-leftSection {
+  display: flex;
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding-bottom: 1px;
+}
+
+.footer-rightSection {
+  display: flex;
+  margin-right: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.footer-leftSection a {
+  margin-right: 10px;
+}
+
+.footer-rightSection a img {
+    width: 88px;
+    height: 31px;
+    object-fit: scale-down;
+}

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>NSI Project - Website - About</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/script.js"></script>
+</head>
+
+<body>
+	<div class="container">
+
+        <div id="templateHeader"></div>
+ 	
+  <h3>Base converter</h3>
+
+  <p>In this project I developed my python skills by writing a program with the purpose of converting numbers from a base x to a base y and vice-versa. The project was filled with hurdles and I had some great headaches while writing it, but it now does it job pretty well.
+  <br/>
+  It can convert integers and floats from base 1 to base 64. Some stuff isn't perfect for example floats are only converted to a certain precision and famous norms like <a href="https://en.wikipedia.org//wiki/IEEE_754">IEE-754</a> are not incorporated in the program.</p>
+  <p>Here is the python code:</p>
+
+	<section id="codeBox">
+		<pre><code class="python">class CONVERTER:
+    def __init__(self, round=5):
+        self.round = round
+
+    def transformFrom(self, item):
+        # TODO: my own Base64 (show in GUI)
+        dic = {
+            '.': '.',  # special treatment for floating point
+            '0': '0',
+            '1': '1',
+            '2': '2',
+            '3': '3',
+            '4': '4',
+            '5': '5',
+            '6': '6',
+            '7': '7',
+            '8': '8',
+            '9': '9',
+            'A': '10',
+            'B': '11',
+            'C': '12',
+            'D': '13',
+            'E': '14',
+            'F': '15',
+            'G': '16',
+            'H': '17',
+            'I': '18',
+            'J': '19',
+            'K': '20',
+            'L': '21',
+            'M': '22',
+            'N': '23',
+            'O': '24',
+            'P': '25',
+            'Q': '26',
+            'R': '27',
+            'S': '28',
+            'T': '29',
+            'U': '30',
+            'V': '31',
+            'W': '32',
+            'X': '33',
+            'Y': '34',
+            'Z': '35',
+            'a': '36',
+            'b': '37',
+            'c': '38',
+            'd': '39',
+            'e': '40',
+            'f': '41',
+            'g': '42',
+            'h': '43',
+            'i': '44',
+            'j': '45',
+            'k': '46',
+            'l': '47',
+            'm': '48',
+            'n': '49',
+            'o': '50',
+            'p': '51',
+            'q': '52',
+            'r': '53',
+            's': '54',
+            't': '55',
+            'u': '56',
+            'v': '57',
+            'w': '58',
+            'x': '59',
+            'y': '60',
+            'z': '61',
+            '+': '62',
+            '/': '63'
+        }
+        return dic[str(item)]
+
+    def transformTo(self, item):
+        # TODO: my own Base64 (show in GUI)
+        dic = {
+            0: "0",
+            1: "1",
+            2: "2",
+            3: "3",
+            4: "4",
+            5: "5",
+            6: "6",
+            7: "7",
+            8: "8",
+            9: "9",
+            10: "A",
+            11: "B",
+            12: "C",
+            13: "D",
+            14: "E",
+            15: "F",
+            16: "G",
+            17: "H",
+            18: "I",
+            19: "J",
+            20: "K",
+            21: "L",
+            22: "M",
+            23: "N",
+            24: "O",
+            25: "P",
+            26: "Q",
+            27: "R",
+            28: "S",
+            29: "T",
+            30: "U",
+            31: "V",
+            32: "W",
+            33: "X",
+            34: "Y",
+            35: "Z",
+            36: "a",
+            37: "b",
+            38: "c",
+            39: "d",
+            40: "e",
+            41: "f",
+            42: "g",
+            43: "h",
+            44: "i",
+            45: "j",
+            46: "k",
+            47: "l",
+            48: "m",
+            49: "n",
+            50: "o",
+            51: "p",
+            52: "q",
+            53: "r",
+            54: "s",
+            55: "t",
+            56: "u",
+            57: "v",
+            58: "w",
+            59: "x",
+            60: "y",
+            61: "z",
+            62: "+",
+            63: "/"
+        }
+        return dic[int(item)]
+
+    def toBase10(self, value, baseX):
+        '''FORMAT INPUT'''
+        # init/reset result
+        base10 = 0
+
+        # make list from value to iterate over each
+        # item separately (item => one number)
+        value = [i for i in str(value)]
+
+        # check if a certain item is out of the range of the base
+        for item in value:
+            if item == '.':
+                pass
+            elif int(self.transformFrom(item)) > baseX:
+                raise Exception(f"CONVERTER: The symbol '{item}' "
+                                f"does not exist in the base{baseX}")
+
+        # add a '.' so we can work like it was there
+        # without getting errors for missing '.'
+        if '.' not in value:
+            value.append('.')
+
+        '''ACTUAL CONVERSION'''
+        for index in range(len(value)):
+            # POINT STUFF
+            # init/reset
+            extraFloatCalc = 0
+
+            # if value is int 'ignore' the '.'
+            if value.index('.') == len(value) - 1:
+                extraFloatCalc = 1
+            # if executing on integer part
+            # 'ignore' the '.' and following values
+            elif index < value.index('.'):
+                extraFloatCalc = len(value) - value.index('.')
+            # if executing on decimal part
+            # calc to pow of disctance to '.'
+            elif value.index('.') < index:
+                extraFloatCalc = len(value) - 1 - index + index - value.index('.')
+
+            # REAL CALCULATIONS
+            # skip the point during calculation
+            if index == value.index('.'):
+                pass
+            else:
+                # add n*inputBase**indexInValue
+                # indexInValue = lastIndex - currentPos - pointVariation
+                base10 += int(self.transformFrom(value[index])) * \
+                          baseX ** \
+                          (len(value) - 1 - index - extraFloatCalc)
+        return base10
+
+    def fromBase10(self, base10, baseY):
+        base10 = float(base10) * baseY
+        base10int = int(base10)
+        base10float = base10 - int(base10)
+
+        # init/reset results
+        valueInt = ""
+
+        # do divisions until quotient (base10)
+        # is equal to 0base10
+        while base10int != 0:
+            # add new value to beginning of value
+            valueInt = f"{self.transformTo(base10int % baseY)}{valueInt}"
+            # get quotient for next step
+            base10int //= baseY
+
+        # string formatting
+        overflow = valueInt[-1:]
+        valueInt = valueInt[:-1]
+
+        # calculate decimal part if existing
+        if base10float != 0:
+            valueFloat = ""
+            while len(valueFloat) < self.round and base10float != 0:
+                # step
+                base10float *= baseY
+
+                # append to result after converting to right base
+                valueFloat = f"{valueFloat}{self.transformTo(int(base10float))}"
+                base10float = base10float - int(base10float)
+
+            # final string formatting
+            value = f"{valueInt}.{overflow}{valueFloat}"
+
+        else:
+            value = valueInt
+        return value
+
+    def convert(self, value, baseX, baseY):
+        """CORRECT"""
+        # cannot use , for floating points
+        if type(value) == str:
+            value = str(value).replace(',', '.')
+
+        """ERRORS"""
+        # Only use supported bases
+        if baseY > 64 or baseX > 64 or baseY < 2 or baseX < 2:
+            raise Exception("CONVERTER: Unsupported base. "
+                            "Must be in [2-64]")
+        if '-' in value:
+            raise Exception("CONVERTERS: Does not support relative numbers")
+
+        """SKIPS"""
+        # if the base hasn't changed
+        # don't lose time
+        if baseX == baseY:
+            return value
+        if value == 0:
+            return '0'
+
+        """STANDARD"""
+        # convert from baseX to baseY with one function
+        return self.fromBase10(self.toBase10(value, baseX), baseY)
+
+
+# ===============================================================================
+# DRIVER CODE
+if __name__ == '__main__':
+    Converter = CONVERTER(round=5)  # init class and set definition of float
+    
+    print('=====\nMISE EN GARDE: La norme utilisé pour l\'équivalence des symboles est la NormeLeander\n=====')
+    while True:
+        value = str(input('La VALEUR à convertir: '))
+        baseX = int(input('La BASE INITIALE: '))
+        baseY = int(input('La BASE FINALE: '))
+        print(f"Valeur convertie en Base{baseY}: {Converter.convert(value, baseX, baseY)}")
+        print("----------")
+
+    # -------------------------------------------------------------------
+    # converter(value: in fromBase, fromBase, toBase) -> value in toBase
+    # print(Converter.convert('000', 1, 35))
+    # -------------------------------------------------------------------</pre></code>
+	</section>
+
+	<p>You can use the code by calling the function and passing in the value to be transformed, the original base and the target base.</p>
+	<br/>
+
+ 	</div>
+
+    <div id="templateFooter"></div>
+
+</body>
+
+</html>
